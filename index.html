@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הפריצה הגדולה — מערכת תפעול</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ── SIDEBAR ── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="assets/images/logo-levillife.png" alt="Levillife"
+           onerror="this.style.display='none'">
+      <div class="brand-text">
+        <div class="brand-name">LEVILLIFE</div>
+        <div class="brand-sub">הפריצה הגדולה · מערכת תפעול</div>
+      </div>
+      <div class="brand-dot"></div>
+    </div>
+    <div id="sidebar-nav"></div>
+  </nav>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-input"
+               placeholder="חיפוש בכל השיעורים..." autocomplete="off">
+        <div class="search-results" id="search-results" style="display:none"></div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="printLesson()" title="הדפס שיעור">
+          🖨️ הדפס
+        </button>
+        <button class="btn btn-ghost btn-sm"
+                onclick="if(confirm('למחוק את כל הצ\'קליסטים?')){localStorage.clear();location.reload()}"
+                title="איפוס צ׳קליסטים">
+          🔄 איפוס
+        </button>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="page-content" id="page-content">
+      <div class="empty-state" style="padding:80px 20px">
+        <div class="empty-state-icon">⚡</div>
+        <div class="empty-state-text">טוען מערכת...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
