@@ -67,7 +67,7 @@ function renderSidebar() {
     <div class="sidebar-section">
       <div class="sidebar-section-label">כללי</div>
       ${navItem('general', '🏠', 'מידע כללי')}
-      ${navItem('setup_page', '⚙️', 'הקמת הסדנה')}
+      ${renderSetupMenu()}
       ${navItem('mentors', '📋', 'דגשים למנטורים')}
     </div>
     <div class="sidebar-divider"></div>
@@ -121,7 +121,8 @@ function navigateTo(page) {
   const content = document.getElementById('page-content');
 
   if (page === 'general') renderGeneralPage(content);
-  else if (page === 'setup_page') renderSetupPage(content);
+  else if (page === 'prints') renderPrintsPage(content);
+  else if (page.startsWith('guide_')) renderGuidePage(content, page.replace('guide_', ''));
   else if (page === 'mentors') renderMentorsPage(content);
   else if (page === 'between') renderBetweenPage(content);
   else if (page.startsWith('lesson_')) {
@@ -594,18 +595,171 @@ function renderGeneralPage(container) {
   `;
 }
 
-function renderSetupPage(container) {
+// ─── SETUP MENU (sidebar accordion) ──────────────────────────────────────────
+function renderSetupMenu() {
+  const open = localStorage.getItem('setup_menu_open') === 'true';
   const g = state.general;
-  if (!g) return;
+  const guides = (g && g.setup_guides) || [];
+  const printFiles = (g && g.print_hub && g.print_hub.files) || [];
+  const printsDone = printFiles.filter(f => localStorage.getItem(`printhub_${f.id}`) === 'true').length;
+
+  let html = `
+    <div class="nav-item" onclick="toggleSetupMenu()">
+      <span class="nav-icon">⚙️</span>
+      <span style="flex:1">הקמת הפריצה הגדולה</span>
+      <span style="font-size:10px;color:var(--text3)">${open ? '▲' : '▼'}</span>
+    </div>`;
+
+  if (open) {
+    html += guides.map(gd => {
+      const p = guideProgress(gd);
+      const done = p.done === p.total && p.total > 0;
+      return `
+      <div class="nav-item sub ${state.currentPage === `guide_${gd.id}` ? 'active' : ''}"
+           onclick="navigateTo('guide_${gd.id}')">
+        <span class="nav-icon">${gd.icon}</span>
+        <span>${gd.short_title || gd.title}</span>
+        <span class="progress-badge" style="${done ? 'color:var(--green)' : ''}">${done ? '✓' : `${p.done}/${p.total}`}</span>
+      </div>`;
+    }).join('');
+
+    html += `
+      <div class="nav-item sub ${state.currentPage === 'prints' ? 'active' : ''}"
+           onclick="navigateTo('prints')">
+        <span class="nav-icon">🖨️</span>
+        <span>הדפסות</span>
+        <span class="progress-badge">${printsDone}/${printFiles.length}</span>
+      </div>`;
+  }
+
+  return html;
+}
+
+function toggleSetupMenu() {
+  const open = localStorage.getItem('setup_menu_open') === 'true';
+  localStorage.setItem('setup_menu_open', open ? 'false' : 'true');
+  renderSidebar();
+}
+
+// ─── GUIDE PAGE (full step-by-step recipe) ───────────────────────────────────
+function renderGuidePage(container, guideId) {
+  const guides = (state.general && state.general.setup_guides) || [];
+  const guide = guides.find(x => x.id === guideId);
+  if (!guide) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">המדריך לא נמצא</div></div>';
+    return;
+  }
+
+  const prog = guideProgress(guide);
+  const pct = prog.total ? Math.round((prog.done / prog.total) * 100) : 0;
 
   container.innerHTML = `
     <div class="page-header">
-      <div class="page-title">⚙️ הקמת הסדנה</div>
-      <div class="page-subtitle">צ'קליסט חד-פעמי — לבצע פעם אחת לפני תחילת הסדנה</div>
+      <div class="page-title">${guide.icon} ${guide.title}</div>
+      <div class="page-subtitle">${guide.description} · ${prog.done} מתוך ${prog.total} שלבים הושלמו</div>
     </div>
-    ${renderSection('צ\'קליסט הקמה', renderChecklistItems(g.setup_checklist, 'site', 'setup'))}
+    <div class="progress-wrap" style="max-width:420px;margin-bottom:20px">
+      <div class="progress-bar" style="height:6px">
+        <div class="progress-fill" style="width:${pct}%;background:var(--purple)"></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-body guide-timeline">
+        ${guide.steps.map((step, idx) => renderGuideStep(guide, step, idx)).join('')}
+      </div>
+    </div>
   `;
-  loadCheckboxStates('site');
+}
+
+// ─── PRINTS PAGE (files hub) ─────────────────────────────────────────────────
+function renderPrintsPage(container) {
+  const hub = state.general && state.general.print_hub;
+  if (!hub) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-text">אין נתוני הדפסות</div></div>';
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="page-header">
+      <div class="page-title">${hub.icon} ${hub.title}</div>
+      <div class="page-subtitle">${hub.description}</div>
+    </div>
+    <div class="section">
+      <div class="section-body">
+        ${hub.files.map(f => {
+          const key = `printhub_${f.id}`;
+          const done = localStorage.getItem(key) === 'true';
+          const qty = f.quantity_formula ? calcQuantity(f.quantity_formula) : '';
+          return `
+          <div class="print-item">
+            <span style="font-size:20px">📄</span>
+            <div class="file-meta" style="flex:1">
+              <div class="file-name" style="${done ? 'color:var(--text3);text-decoration:line-through' : ''}">${f.name}</div>
+              <div class="file-desc">${f.description}${qty ? ` · כמות: ${qty}` : ''}</div>
+            </div>
+            ${f.link
+              ? `<a href="${f.link}" target="_blank" class="btn btn-ghost btn-sm">⬇️ הורדה</a>`
+              : '<span style="font-size:11px;color:var(--text3)">אין קובץ עדיין</span>'}
+            <label class="setup-step-check">
+              <input type="checkbox" ${done ? 'checked' : ''}
+                     onchange="togglePrintFile('${key}', this.checked)">
+              <span>מוכן</span>
+            </label>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function togglePrintFile(key, checked) {
+  localStorage.setItem(key, checked ? 'true' : 'false');
+  renderSidebar();
+  renderPrintsPage(document.getElementById('page-content'));
+}
+
+// ─── SETUP GUIDES ─────────────────────────────────────────────────────────────
+function guideProgress(guide) {
+  const total = guide.steps.length;
+  const done = guide.steps.filter(s =>
+    localStorage.getItem(`setupguide_${guide.id}_${s.id}`) === 'true').length;
+  return { done, total };
+}
+
+function renderGuideStep(guide, step, idx) {
+  const key = `setupguide_${guide.id}_${step.id}`;
+  const done = localStorage.getItem(key) === 'true';
+  const imagesHtml = (step.images || []).map(src => `
+    <img src="${src}" class="step-img" loading="lazy"
+         onclick="window.open('${src}', '_blank')"
+         onerror="this.style.display='none'"
+         alt="${step.title}">`).join('');
+
+  return `
+    <div class="setup-step ${done ? 'done' : ''}" id="ss-${key}">
+      <div class="setup-step-num" style="${done ? 'background:rgba(82,212,74,0.15);color:var(--green)' : ''}">
+        ${done ? '✓' : idx + 1}
+      </div>
+      <div class="setup-step-content">
+        <div class="setup-step-title-row">
+          <div class="setup-step-title">${step.title}</div>
+          <label class="setup-step-check">
+            <input type="checkbox" ${done ? 'checked' : ''}
+                   onchange="toggleGuideStep('${key}', '${guide.id}', this.checked)">
+            <span>בוצע</span>
+          </label>
+        </div>
+        <div class="setup-step-desc">${step.description}</div>
+        ${step.note ? `<div class="setup-step-note">💡 ${step.note}</div>` : ''}
+        ${imagesHtml ? `<div class="step-images">${imagesHtml}</div>` : ''}
+      </div>
+    </div>`;
+}
+
+function toggleGuideStep(key, guideId, checked) {
+  localStorage.setItem(key, checked ? 'true' : 'false');
+  renderSidebar();
+  renderGuidePage(document.getElementById('page-content'), guideId);
 }
 
 function renderMentorsPage(container) {

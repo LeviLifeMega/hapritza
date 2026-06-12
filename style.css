@@ -753,6 +753,113 @@ body {
 .mentor-step-title { font-size: 14px; font-weight: 700; color: var(--text1); margin-bottom: 4px; }
 .mentor-step-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
 
+/* ─── SETUP GUIDES ─── */
+.nav-item.sub {
+  padding-right: 38px;
+  font-size: 12.5px;
+}
+
+.setup-step {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.setup-step:last-child { border-bottom: none; }
+
+.guide-timeline .setup-step { border-bottom: none; }
+.guide-timeline .setup-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 52px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--border);
+}
+
+.setup-step-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(123,79,212,0.15);
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.setup-step-content { flex: 1; min-width: 0; }
+
+.setup-step-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.setup-step-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text1);
+  flex: 1;
+}
+
+.setup-step.done .setup-step-title {
+  color: var(--text3);
+  text-decoration: line-through;
+}
+
+.setup-step-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text3);
+  cursor: pointer;
+  user-select: none;
+}
+.setup-step-check input { accent-color: var(--green); width: 15px; height: 15px; cursor: pointer; }
+
+.setup-step-desc {
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.setup-step-note {
+  font-size: 12.5px;
+  color: var(--text2);
+  background: rgba(123,79,212,0.07);
+  border-right: 2px solid var(--purple);
+  padding: 7px 11px;
+  border-radius: 5px;
+  margin-top: 8px;
+}
+
+.step-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.step-img {
+  width: 200px;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  cursor: zoom-in;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.step-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
 /* ─── EMPTY STATE ─── */
 .empty-state {
   text-align: center;
