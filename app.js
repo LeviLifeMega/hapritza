@@ -8,8 +8,23 @@ let state = {
   searchOpen: false,
 };
 
+// ─── THEME ────────────────────────────────────────────────────────────────────
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.innerHTML = theme === 'light' ? '🌙 כהה' : '☀️ בהיר';
+}
+
+function toggleTheme() {
+  const current = localStorage.getItem('theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 async function init() {
+  applyTheme(localStorage.getItem('theme') || 'dark');
   // Load global students count
   state.studentsCount = parseInt(localStorage.getItem('students_count') || '25');
 
@@ -31,6 +46,11 @@ async function init() {
 }
 
 async function fetchJSON(path) {
+  // On file:// protocol, fetch is blocked by CORS — use embedded data if available
+  if (location.protocol === 'file:' && window.__STATIC_DATA__) {
+    const key = path.replace('data/', '').replace('.json', '');
+    return window.__STATIC_DATA__[key] || null;
+  }
   try {
     const r = await fetch(path);
     if (!r.ok) return null;

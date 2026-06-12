@@ -40,6 +40,9 @@
       </div>
 
       <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" id="theme-toggle" onclick="toggleTheme()" title="מצב כהה / בהיר">
+          ☀️ בהיר
+        </button>
         <button class="btn btn-ghost btn-sm" onclick="printLesson()" title="הדפס שיעור">
           🖨️ הדפס
         </button>
@@ -61,6 +64,147 @@
 
   </main>
 
+  <script>
+  // Inline data for file:// protocol (no server). When served via HTTP the app uses fetch() instead.
+  window.__STATIC_DATA__ = {
+    "general": {
+      "workshop": { "name": "הפריצה הגדולה", "subtitle": "סדנת הגשמה עצמית", "total_lessons": 10, "location": "", "students_count": 25, "notes": "" },
+      "schedule": [
+        { "lesson": 1, "date": "", "time": "19:00", "title": "איך להוציא את המקסימום מהתהליך" },
+        { "lesson": 2, "date": "", "time": "19:00", "title": "הזהות החדשה שלי" },
+        { "lesson": 3, "date": "", "time": "19:00", "title": "גבולות ותקשורת" },
+        { "lesson": 4, "date": "", "time": "19:00", "title": "כסף ושפע" },
+        { "lesson": 5, "date": "", "time": "19:00", "title": "מערכות יחסים" },
+        { "lesson": 6, "date": "", "time": "19:00", "title": "הגוף והנפש" },
+        { "lesson": 7, "date": "", "time": "19:00", "title": "מנהיגות אישית" },
+        { "lesson": 8, "date": "", "time": "19:00", "title": "חלומות ומטרות" },
+        { "lesson": 9, "date": "", "time": "19:00", "title": "ביצוע ועשייה" },
+        { "lesson": 10, "date": "", "time": "19:00", "title": "מפגש מסכם" }
+      ],
+      "setup_checklist": [
+        { "id": "setup_01", "text": "פתיחת קבוצת פייסבוק - שם, תיאור, תמונת כריכה, הגדרות פרטיות", "done": false },
+        { "id": "setup_02", "text": "פתיחת קבוצת ווצאפ ראשית", "done": false },
+        { "id": "setup_03", "text": "פתיחת קבוצת ווצאפ מנטורים", "done": false },
+        { "id": "setup_04", "text": "הגדרת אתר החברים", "done": false },
+        { "id": "setup_05", "text": "הגדרת חדר זום קבוע", "done": false },
+        { "id": "setup_06", "text": "פתיחת תיקיית Google Drive לסדנה", "done": false },
+        { "id": "setup_07", "text": "שליחת הודעת ברוכים הבאים לכל המשתתפים", "done": false }
+      ],
+      "mentor_guide": [
+        { "id": "m1", "title": "שליטה על המצגן", "description": "ניהול הטמפרטורה והאוורור בחדר. טמפרטורה מומלצת: 22-23 מעלות." },
+        { "id": "m2", "title": "עבודה עם התאורה", "description": "לוח התאורה בכניסה. שיעור רגיל: מלאה. מדיטציה: 30%. הפסקה: מלאה." },
+        { "id": "m3", "title": "עבודה עם המדמה ומיקרופון יד", "description": "לוודא שסוללות טעונות. לבדוק שהמיקסר מקשיב." },
+        { "id": "m4", "title": "מוזיקה ועבודה עם המיקסר", "description": "פלייליסטים ב-Spotify. מיקסר - master בין 60-70%." },
+        { "id": "m5", "title": "הקלטה", "description": "REC לפני השיעור. עצירה בהפסקה. REC שוב בחידוש." },
+        { "id": "m6", "title": "זום", "description": "לחבר לפחות 20 דקות לפני. לשלוח קישור שעה לפני." },
+        { "id": "m7", "title": "מצלמה", "description": "על חצובה. לוודא SD card פנוי. לצלם גם תמונות סטיילס." },
+        { "id": "m8", "title": "כפתורי האלגנו", "description": "לוודא שלט טעון. מרחק מרבי 10 מטר." },
+        { "id": "m9", "title": "כללי לבוש", "description": "לבוש מכובד. לוגו לוילייף - חובה לאנשי צוות." }
+      ],
+      "between_lessons": {
+        "reminders": ["שליחת תזכורת ביום שלפני השיעור הבא", "עידוד שיתופים בקבוצת הפייסבוק"],
+        "homework_followup": ["בדיקה בקבוצת ווצאפ שאנשים מבצעים משימות", "תגובה חיובית לכל שיתוף"],
+        "next_lesson_prep": ["עדכון מצגת לשיעור הבא - לשלוח לאייל", "הכנת דפי עבודה - להדפיס יומיים לפני"]
+      }
+    },
+    "lesson_01": {
+      "lesson_number": 1, "title": "איך להוציא את המקסימום מהתהליך", "subtitle": "שיעור פתיחה", "color": "purple",
+      "before": {
+        "preparations": [
+          { "id": "prep_01", "text": "לבדוק שיש דיו במדפסת", "note": null },
+          { "id": "prep_02", "text": "לבדוק שיש דפים למדפסת (לפחות 200 דפים)", "note": null },
+          { "id": "prep_03", "text": "לבדוק שיש מדבקות קטנות עם הלוגו", "note": "מדבקות עם הלוגו של אייל אברהם לוי" },
+          { "id": "prep_04", "text": "לוודא שהמצלמה עם סוללה מלאה וSD card פנוי", "note": null },
+          { "id": "prep_05", "text": "להכין תגיות שם לכל משתתף", "note": "לכתוב בטוש שחור, אותיות גדולות" }
+        ],
+        "purchases": [
+          { "id": "buy_01", "text": "בלונים בצבעים: סגול, תכלת, ורוד, זהב, אפור", "quantity_formula": "40", "supplier": "חנות יאלי בשכונה", "phone": "03-6731983", "note": "4 שקל לבלון - לוודא מחיר" },
+          { "id": "buy_02", "text": "פירות לחיתוך: אבטיח, מלון, ענבים", "quantity_formula": "students_count * 0.3", "supplier": "סופר שכונתי", "phone": null, "note": "לחתוך ולסדר יפה" },
+          { "id": "buy_03", "text": "בקבוקי מים קטנים (0.5 ליטר)", "quantity_formula": "students_count", "supplier": "סופר שכונתי", "phone": null, "note": null }
+        ],
+        "print_materials": [
+          { "id": "print_01", "name": "גלגל החיים", "quantity_formula": "students_count", "drive_link": "", "requires_approval": true, "approved": false },
+          { "id": "print_02", "name": "דף התחייבות אישית", "quantity_formula": "students_count", "drive_link": "", "approved": false }
+        ]
+      },
+      "setup": {
+        "venue_checklist": [
+          { "id": "v1", "text": "לסדר כיסאות בחצי עיגול מול הבמה" },
+          { "id": "v2", "text": "לחתוך מגשי כיבוד פירות וירקות" },
+          { "id": "v3", "text": "לסדר צלוחיות פיצוחים" },
+          { "id": "v4", "text": "לקשור בלונים ולפזר בחלל" }
+        ],
+        "technical_checklist": [
+          { "id": "t1", "text": "לחבר ולהדליק את המחשב" },
+          { "id": "t2", "text": "לפתוח את המצגת ולבדוק" },
+          { "id": "t3", "text": "לבדוק מצלמה ומיקרופון" },
+          { "id": "t4", "text": "לחבר זום + לשלוח קישור בווצאפ" }
+        ],
+        "zoom_link": "", "presentation_drive_link": "", "presentation_approved": false,
+        "music_playlists": [
+          { "id": "mu1", "type": "כתיבה", "name": "Deep Focus - Study Music", "link": "" },
+          { "id": "mu2", "type": "אנרגטית / חיובית", "name": "Happy Vibes", "link": "" },
+          { "id": "mu3", "type": "הקפצה", "name": "Energy Boost", "link": "" }
+        ]
+      },
+      "during": {
+        "stages": [
+          { "id": "s1", "title": "קבלת פנים וכניסה", "duration_minutes": 20, "description": "מוזיקה אנרגטית. לקבל פנים בחיוך. אייל מדבר עם כל אחד בנפרד.", "nuances": [{ "trigger": "אם מגיע מאוחר", "response": "לא לעצור שיעור - כניסה שקטה." }] },
+          { "id": "s2", "title": "פתיחה - ברכת ברוכים הבאים", "duration_minutes": 15, "description": "אייל פותח עם אנרגיה גבוהה. מציג חזון הסדנה.", "nuances": [{ "trigger": "אם האנרגיה נמוכה", "response": "פעילות הקפצה קצרה: תעמדו, תתנו יד לשכן." }] },
+          { "id": "s3", "title": "היכרות - סיבוב שמות", "duration_minutes": 15, "description": "כל אחד: שם + 'אני פה כי...'", "nuances": [] },
+          { "id": "s4", "title": "תוכן - גלגל החיים", "duration_minutes": 30, "description": "חלוקת דפים. הסבר 8 תחומי חיים. מילוי בשקט + מוזיקה.", "nuances": [{ "trigger": "אם מישהו מתחיל לבכות", "response": "'זה מקום בטוח'. מנטור לגשת ולהיות איתו." }] },
+          { "id": "s5", "title": "הפסקה", "duration_minutes": 15, "description": "לכבות הקלטה. מנטורים מסתובבים.", "nuances": [] },
+          { "id": "s6", "title": "סיכום ומשימת בית", "duration_minutes": 10, "description": "אייל מסכם. משימה: לשתף בפייסבוק. תאריך שיעור הבא.", "nuances": [] }
+        ],
+        "special_notes": ["שיעור ראשון - חשוב ליצור אווירה חמה", "לצלם הרבה - זה השיעור שנכנס לאתר"],
+        "opening_notes": ["לפתוח עם שאלה על התובנה מהשיעור הקודם (מהשיעור ה-2)", "נהלי שאלות: להרים יד, לא לעצור באמצע"]
+      },
+      "after": {
+        "whatsapp_messages": [
+          { "id": "msg_01", "name": "הודעת סיכום שיעור 1", "recipient": "קבוצת ווצאפ ראשית - הפריצה הגדולה", "text": "✨ איזה שיעור פתיחה מדהים היה הערב! ✨\n\nראיתי בעיניים כמה אנשים נמצאים בחדר הזה עם ניצוץ בעיניים ורצון אמיתי לשנות.\n\nהמשימה שלכם לשיעור הבא:\n📝 למלא את גלגל החיים ולשתף בקבוצת הפייסבוק\n\nאתם מדהימים! 💜", "attachments": ["תמונה מהשיעור"] },
+          { "id": "msg_02", "name": "הודעה לקבוצת מנטורים", "recipient": "קבוצת ווצאפ מנטורים", "text": "כוכבים! 🌟\n\nשיעור 1 הצליח! תודה לכם.\n\nנקודות לשיפור:\n- לרשום כאן\n\n💜", "attachments": [] }
+        ],
+        "recording_checklist": [
+          { "id": "r1", "text": "לוודא שההקלטה נשמרה" },
+          { "id": "r2", "text": "להוריד את קובץ ההקלטה" },
+          { "id": "r3", "text": "לערוך - לחתוך הפסקה, תחילה וסוף" },
+          { "id": "r4", "text": "לשלוח קישור לאייל לאישור" }
+        ],
+        "recording_link": "",
+        "website_unlock_checklist": [
+          { "id": "w1", "text": "להיכנס לממשק ניהול האתר" },
+          { "id": "w2", "text": "לפתוח גישה לשיעור 2" },
+          { "id": "w3", "text": "לשלוח הודעת ווצאפ על פתיחת השיעור" }
+        ],
+        "website_lesson_link": "",
+        "photos_to_send": [
+          { "id": "p1", "text": "תמונה קבוצתית של כולם", "recipient": "קבוצת ווצאפ ראשית" },
+          { "id": "p2", "text": "תמונות של אנשים עם גלגל החיים", "recipient": "קבוצת ווצאפ ראשית" }
+        ],
+        "closing_checklist": [
+          { "id": "c1", "text": "ניקוי החלל" },
+          { "id": "c2", "text": "לדווח לאייל על תקלות / הצלחות" },
+          { "id": "c3", "text": "לעדכן גיליון נוכחות" }
+        ]
+      },
+      "files": { "presentation": { "drive_link": "", "approved": false }, "work_sheets": [], "recording_link": "", "photos": [] }
+    }
+  };
+  // Fill remaining lessons with basic structure
+  for (let i = 2; i <= 10; i++) {
+    const colors = ['','purple','blue','pink','teal','green','purple','blue','pink','teal','green'];
+    const titles = ['','איך להוציא את המקסימום מהתהליך','הזהות החדשה שלי','גבולות ותקשורת','כסף ושפע','מערכות יחסים','הגוף והנפש','מנהיגות אישית','חלומות ומטרות','ביצוע ועשייה','מפגש מסכם'];
+    window.__STATIC_DATA__[`lesson_0${i < 10 ? '0'+i : i}`.replace('lesson_0','lesson_0').replace('lesson_010','lesson_10')] =
+    window.__STATIC_DATA__[`lesson_${String(i).padStart(2,'0')}`] = {
+      lesson_number: i, title: titles[i], subtitle: "", color: colors[i],
+      before: { preparations: [{id:'p1',text:'לבדוק שיש דיו במדפסת',note:null},{id:'p2',text:'לבדוק שיש דפים',note:null}], purchases: [], print_materials: [] },
+      setup: { venue_checklist: [{id:'v1',text:'לסדר כיסאות לפי מספר התלמידים'},{id:'v2',text:'לחתוך מגשי כיבוד'}], technical_checklist: [{id:'t1',text:'לחבר ולהדליק את המחשב'},{id:'t2',text:'לבדוק מצגת ומיקרופון'},{id:'t3',text:'לחבר זום'}], zoom_link: '', presentation_drive_link: '', presentation_approved: false, music_playlists: [{id:'mu1',type:'כתיבה',name:'Deep Focus',link:''},{id:'mu2',type:'אנרגטית',name:'Happy Vibes',link:''}] },
+      during: { stages: [{id:'s1',title:'פתיחה - תובנות מהשיעור הקודם',duration_minutes:15,description:'פתיחה עם שאלה: מה הייתה התובנה הכי גדולה מאז השיעור הקודם?',nuances:[]},{id:'s2',title:'תוכן ראשי',duration_minutes:40,description:'תוכן השיעור לפי המצגת.',nuances:[]},{id:'s3',title:'הפסקה',duration_minutes:15,description:'הפסקה! לכבות הקלטה.',nuances:[]},{id:'s4',title:'סיכום ומשימת בית',duration_minutes:10,description:'אייל מסכם ונותן משימת בית.',nuances:[]}], special_notes: [], opening_notes: ['לפתוח תמיד עם שאלה על התובנה מהשיעור הקודם'] },
+      after: { whatsapp_messages: [{id:'msg_01',name:`הודעת סיכום שיעור ${i}`,recipient:'קבוצת ווצאפ ראשית',text:`✨ שיעור ${i} היה מדהים! ✨\n\nתודה לכולם על הנוכחות והאנרגיה.\n\nמשימה לשיעור הבא:\n📝 לרשום כאן את המשימה\n\nאתם מדהימים! 💜`,attachments:[]}], recording_checklist: [{id:'r1',text:'לוודא שההקלטה נשמרה'},{id:'r2',text:'להוריד ולערוך'},{id:'r3',text:'לשלוח לאייל'}], recording_link: '', website_unlock_checklist: [{id:'w1',text:`לפתוח גישה לשיעור ${i+1}`},{id:'w2',text:'לשלוח הודעת ווצאפ'}], website_lesson_link: '', photos_to_send: [{id:'p1',text:'תמונה קבוצתית',recipient:'קבוצת ווצאפ ראשית'}], closing_checklist: [{id:'c1',text:'ניקוי החלל'},{id:'c2',text:'לדווח לאייל'},{id:'c3',text:'לעדכן נוכחות'}] },
+      files: { presentation: { drive_link: '', approved: false }, work_sheets: [], recording_link: '', photos: [] }
+    };
+  }
+  </script>
   <script src="app.js"></script>
 </body>
 </html>
