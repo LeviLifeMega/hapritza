@@ -34,8 +34,8 @@ async function init() {
     state.studentsCount = parseInt(localStorage.getItem('students_count') || state.general.workshop.students_count || '25');
   }
 
-  // Load all lessons
-  for (let i = 1; i <= 10; i++) {
+  // Load all lessons (0 = preliminary meeting)
+  for (let i = 0; i <= 10; i++) {
     const data = await fetchJSON(`data/lesson_${String(i).padStart(2,'0')}.json`);
     if (data) state.lessons[i] = data;
   }
@@ -74,17 +74,17 @@ function renderSidebar() {
     <div class="sidebar-section">
       <div class="sidebar-section-label">שיעורים</div>`;
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 0; i <= 10; i++) {
     const lesson = state.lessons[i];
-    const title = lesson ? lesson.title : `שיעור ${i}`;
     const color = lesson ? (colorMap[lesson.color] || colorMap.purple) : colorMap.purple;
     const progress = getLessonProgress(i);
+    const label = i === 0 ? 'מפגש מקדים' : `שיעור ${i}${lesson && lesson.title ? ' - ' + lesson.title.slice(0,14) : ''}`;
     html += `
       <div class="nav-item ${state.currentPage === `lesson_${i}` ? 'active' : ''}"
            onclick="navigateTo('lesson_${i}')"
            id="nav-lesson-${i}">
         <span class="lesson-color-dot" style="background:${color}"></span>
-        <span>שיעור ${i}${lesson && lesson.title ? ' - ' + lesson.title.slice(0,14) : ''}</span>
+        <span>${label}</span>
         ${progress.total > 0 ? `<span class="progress-badge">${progress.done}/${progress.total}</span>` : ''}
       </div>`;
   }
@@ -147,7 +147,7 @@ function renderLessonPage(container, num) {
     <div class="page-header">
       <div class="page-title">
         <div class="lesson-color-bar" style="background:${color}"></div>
-        שיעור ${num} — ${lesson.title}
+        ${num === 0 ? 'מפגש מקדים' : `שיעור ${num}`} — ${lesson.title}
       </div>
       ${lesson.subtitle ? `<div class="page-subtitle">${lesson.subtitle}</div>` : ''}
     </div>
@@ -463,7 +463,7 @@ function renderTabFiles(container, lesson, num) {
     <div class="file-card">
       <span class="file-icon">🎯</span>
       <div class="file-meta">
-        <div class="file-name">מצגת שיעור ${num}</div>
+        <div class="file-name">מצגת ${num === 0 ? 'המפגש המקדים' : `שיעור ${num}`}</div>
         <div class="file-desc">Google Slides</div>
       </div>
       ${f.presentation.drive_link ? `<a href="${f.presentation.drive_link}" target="_blank" class="btn btn-ghost btn-sm">פתח מצגת</a>` : '<span style="font-size:12px;color:var(--text3)">ללא קישור</span>'}
@@ -569,7 +569,7 @@ function renderGeneralPage(container) {
               const dateKey = `schedule_date_${s.lesson}`;
               const savedDate = localStorage.getItem(dateKey) || s.date;
               return `<tr>
-                <td><span style="font-weight:700;color:var(--purple)">שיעור ${s.lesson}</span></td>
+                <td><span style="font-weight:700;color:var(--purple)">${s.lesson === 0 ? 'מפגש מקדים' : `שיעור ${s.lesson}`}</span></td>
                 <td>${title || '—'}</td>
                 <td><input type="text" style="background:transparent;border:none;color:var(--text1);font-family:Heebo;font-size:13px;width:100px;direction:ltr"
                            value="${savedDate}" placeholder="DD/MM/YY"
@@ -603,9 +603,9 @@ function renderSetupPage(container) {
       <div class="page-title">⚙️ הקמת הסדנה</div>
       <div class="page-subtitle">צ'קליסט חד-פעמי — לבצע פעם אחת לפני תחילת הסדנה</div>
     </div>
-    ${renderSection('צ\'קליסט הקמה', renderChecklistItems(g.setup_checklist, 0, 'setup'))}
+    ${renderSection('צ\'קליסט הקמה', renderChecklistItems(g.setup_checklist, 'site', 'setup'))}
   `;
-  loadCheckboxStates(0);
+  loadCheckboxStates('site');
 }
 
 function renderMentorsPage(container) {
@@ -770,13 +770,14 @@ function searchAll(q) {
   const ql = q.toLowerCase();
   const hits = [];
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 0; i <= 10; i++) {
     const lesson = state.lessons[i];
     if (!lesson) continue;
+    const lessonLabel = i === 0 ? 'מפגש מקדים' : `שיעור ${i}`;
 
     const searchIn = (text, context) => {
       if (text && text.toLowerCase().includes(ql)) {
-        hits.push({ page: `lesson_${i}`, context: `שיעור ${i} — ${context}`, text });
+        hits.push({ page: `lesson_${i}`, context: `${lessonLabel} — ${context}`, text });
       }
     };
 

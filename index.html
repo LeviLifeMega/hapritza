@@ -68,18 +68,19 @@
   // Inline data for file:// protocol (no server). When served via HTTP the app uses fetch() instead.
   window.__STATIC_DATA__ = {
     "general": {
-      "workshop": { "name": "הפריצה הגדולה", "subtitle": "סדנת הגשמה עצמית", "total_lessons": 10, "location": "", "students_count": 25, "notes": "" },
+      "workshop": { "name": "הפריצה הגדולה", "subtitle": "סדנת הגשמה עצמית", "total_lessons": 11, "location": "", "students_count": 25, "notes": "" },
       "schedule": [
-        { "lesson": 1, "date": "", "time": "19:00", "title": "איך להוציא את המקסימום מהתהליך" },
-        { "lesson": 2, "date": "", "time": "19:00", "title": "הזהות החדשה שלי" },
-        { "lesson": 3, "date": "", "time": "19:00", "title": "גבולות ותקשורת" },
-        { "lesson": 4, "date": "", "time": "19:00", "title": "כסף ושפע" },
-        { "lesson": 5, "date": "", "time": "19:00", "title": "מערכות יחסים" },
-        { "lesson": 6, "date": "", "time": "19:00", "title": "הגוף והנפש" },
-        { "lesson": 7, "date": "", "time": "19:00", "title": "מנהיגות אישית" },
-        { "lesson": 8, "date": "", "time": "19:00", "title": "חלומות ומטרות" },
-        { "lesson": 9, "date": "", "time": "19:00", "title": "ביצוע ועשייה" },
-        { "lesson": 10, "date": "", "time": "19:00", "title": "מפגש מסכם" }
+        { "lesson": 0, "date": "", "time": "19:00", "title": "מפגש מקדים: איך להוציא את המקסימום מהתהליך" },
+        { "lesson": 1, "date": "", "time": "19:00", "title": "אחריות אקטיבית - הבסיס להצלחה בכל תחום בחיים" },
+        { "lesson": 2, "date": "", "time": "19:00", "title": "משלמים מחירים ועפים על החיים" },
+        { "lesson": 3, "date": "", "time": "19:00", "title": "ערך עצמי גבוה כמפתח הצלחה, מימוש וסיפוק" },
+        { "lesson": 4, "date": "", "time": "19:00", "title": "חזון והגדרת ההצלחה שלך" },
+        { "lesson": 5, "date": "", "time": "19:00", "title": "איך להניע את עצמך לפעולה ולייצר משמעות" },
+        { "lesson": 6, "date": "", "time": "19:00", "title": "הכוח של האמונה לייצר את מציאות חייך" },
+        { "lesson": 7, "date": "", "time": "19:00", "title": "אמנות האהבה וההשפעה" },
+        { "lesson": 8, "date": "", "time": "19:00", "title": "אנרגיה שופעת ובריאות מנצחת" },
+        { "lesson": 9, "date": "", "time": "19:00", "title": "כוח הרצון שלך - הסוד למגנט שפע ברכה והצלחה" },
+        { "lesson": 10, "date": "", "time": "19:00", "title": "מפגש מסכם וקופצים לשלב הבא" }
       ],
       "setup_checklist": [
         { "id": "setup_01", "text": "פתיחת קבוצת פייסבוק - שם, תיאור, תמונת כריכה, הגדרות פרטיות", "done": false },
@@ -107,8 +108,8 @@
         "next_lesson_prep": ["עדכון מצגת לשיעור הבא - לשלוח לאייל", "הכנת דפי עבודה - להדפיס יומיים לפני"]
       }
     },
-    "lesson_01": {
-      "lesson_number": 1, "title": "איך להוציא את המקסימום מהתהליך", "subtitle": "שיעור פתיחה", "color": "purple",
+    "lesson_00": {
+      "lesson_number": 0, "title": "איך להוציא את המקסימום מהתהליך", "subtitle": "מפגש מקדים", "color": "purple",
       "before": {
         "preparations": [
           { "id": "prep_01", "text": "לבדוק שיש דיו במדפסת", "note": null },
@@ -190,11 +191,10 @@
       "files": { "presentation": { "drive_link": "", "approved": false }, "work_sheets": [], "recording_link": "", "photos": [] }
     }
   };
-  // Fill remaining lessons with basic structure
-  for (let i = 2; i <= 10; i++) {
+  // Fill lessons 1-10 with basic structure
+  for (let i = 1; i <= 10; i++) {
     const colors = ['','purple','blue','pink','teal','green','purple','blue','pink','teal','green'];
-    const titles = ['','איך להוציא את המקסימום מהתהליך','הזהות החדשה שלי','גבולות ותקשורת','כסף ושפע','מערכות יחסים','הגוף והנפש','מנהיגות אישית','חלומות ומטרות','ביצוע ועשייה','מפגש מסכם'];
-    window.__STATIC_DATA__[`lesson_0${i < 10 ? '0'+i : i}`.replace('lesson_0','lesson_0').replace('lesson_010','lesson_10')] =
+    const titles = ['','אחריות אקטיבית - הבסיס להצלחה בכל תחום בחיים','משלמים מחירים ועפים על החיים','ערך עצמי גבוה כמפתח הצלחה, מימוש וסיפוק','חזון והגדרת ההצלחה שלך','איך להניע את עצמך לפעולה ולייצר משמעות','הכוח של האמונה לייצר את מציאות חייך','אמנות האהבה וההשפעה','אנרגיה שופעת ובריאות מנצחת','כוח הרצון שלך - הסוד למגנט שפע ברכה והצלחה','מפגש מסכם וקופצים לשלב הבא'];
     window.__STATIC_DATA__[`lesson_${String(i).padStart(2,'0')}`] = {
       lesson_number: i, title: titles[i], subtitle: "", color: colors[i],
       before: { preparations: [{id:'p1',text:'לבדוק שיש דיו במדפסת',note:null},{id:'p2',text:'לבדוק שיש דפים',note:null}], purchases: [], print_materials: [] },

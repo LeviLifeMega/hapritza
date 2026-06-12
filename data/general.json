@@ -2,22 +2,23 @@
   "workshop": {
     "name": "הפריצה הגדולה",
     "subtitle": "סדנת הגשמה עצמית",
-    "total_lessons": 10,
+    "total_lessons": 11,
     "location": "",
     "students_count": 25,
     "notes": ""
   },
   "schedule": [
-    { "lesson": 1, "date": "", "time": "19:00", "title": "איך להוציא את המקסימום מהתהליך" },
-    { "lesson": 2, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 3, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 4, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 5, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 6, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 7, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 8, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 9, "date": "", "time": "19:00", "title": "" },
-    { "lesson": 10, "date": "", "time": "19:00", "title": "מפגש מסכם" }
+    { "lesson": 0, "date": "", "time": "19:00", "title": "מפגש מקדים: איך להוציא את המקסימום מהתהליך" },
+    { "lesson": 1, "date": "", "time": "19:00", "title": "אחריות אקטיבית - הבסיס להצלחה בכל תחום בחיים" },
+    { "lesson": 2, "date": "", "time": "19:00", "title": "משלמים מחירים ועפים על החיים" },
+    { "lesson": 3, "date": "", "time": "19:00", "title": "ערך עצמי גבוה כמפתח הצלחה, מימוש וסיפוק" },
+    { "lesson": 4, "date": "", "time": "19:00", "title": "חזון והגדרת ההצלחה שלך" },
+    { "lesson": 5, "date": "", "time": "19:00", "title": "איך להניע את עצמך לפעולה ולייצר משמעות" },
+    { "lesson": 6, "date": "", "time": "19:00", "title": "הכוח של האמונה לייצר את מציאות חייך" },
+    { "lesson": 7, "date": "", "time": "19:00", "title": "אמנות האהבה וההשפעה" },
+    { "lesson": 8, "date": "", "time": "19:00", "title": "אנרגיה שופעת ובריאות מנצחת" },
+    { "lesson": 9, "date": "", "time": "19:00", "title": "כוח הרצון שלך - הסוד למגנט שפע ברכה והצלחה" },
+    { "lesson": 10, "date": "", "time": "19:00", "title": "מפגש מסכם וקופצים לשלב הבא" }
   ],
   "setup_checklist": [
     { "id": "setup_01", "text": "פתיחת קבוצת פייסבוק - הגדרת שם, תיאור, תמונת כריכה, הגדרות פרטיות", "done": false },
