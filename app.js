@@ -733,7 +733,7 @@ function renderGuideStep(guide, step, idx) {
   const imagesHtml = imgs.length
     ? imgs.map(src => `
         <img src="${src}" class="step-img" loading="lazy"
-             onclick="window.open('${src}', '_blank')"
+             onclick="openLightbox('${src}')"
              onerror="this.style.display='none'"
              alt="${step.title}">`).join('')
     : `<div class="step-img-placeholder">📸 תמונה תתווסף כאן</div>`;
@@ -959,6 +959,20 @@ function searchAll(q) {
 
   return hits;
 }
+
+// ─── LIGHTBOX ─────────────────────────────────────────────────────────────────
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').style.display = 'flex';
+  document.addEventListener('keydown', _lbKey);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+  document.removeEventListener('keydown', _lbKey);
+}
+
+function _lbKey(e) { if (e.key === 'Escape') closeLightbox(); }
 
 // ─── PRINT ────────────────────────────────────────────────────────────────────
 function printLesson() {

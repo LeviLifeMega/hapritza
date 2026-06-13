@@ -64,6 +64,12 @@
 
   </main>
 
+  <!-- ── LIGHTBOX ── -->
+  <div id="lightbox" onclick="closeLightbox()" style="display:none">
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+    <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  </div>
+
   <script>
   // Inline data for file:// protocol (no server). When served via HTTP the app uses fetch() instead.
   window.__STATIC_DATA__ = {
