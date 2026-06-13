@@ -729,11 +729,14 @@ function guideProgress(guide) {
 function renderGuideStep(guide, step, idx) {
   const key = `setupguide_${guide.id}_${step.id}`;
   const done = localStorage.getItem(key) === 'true';
-  const imagesHtml = (step.images || []).map(src => `
-    <img src="${src}" class="step-img" loading="lazy"
-         onclick="window.open('${src}', '_blank')"
-         onerror="this.style.display='none'"
-         alt="${step.title}">`).join('');
+  const imgs = (step.images || []).filter(Boolean);
+  const imagesHtml = imgs.length
+    ? imgs.map(src => `
+        <img src="${src}" class="step-img" loading="lazy"
+             onclick="window.open('${src}', '_blank')"
+             onerror="this.style.display='none'"
+             alt="${step.title}">`).join('')
+    : `<div class="step-img-placeholder">📸 תמונה תתווסף כאן</div>`;
 
   return `
     <div class="setup-step ${done ? 'done' : ''}" id="ss-${key}">
@@ -749,9 +752,13 @@ function renderGuideStep(guide, step, idx) {
             <span>בוצע</span>
           </label>
         </div>
-        <div class="setup-step-desc">${step.description}</div>
-        ${step.note ? `<div class="setup-step-note">💡 ${step.note}</div>` : ''}
-        ${imagesHtml ? `<div class="step-images">${imagesHtml}</div>` : ''}
+        <div class="setup-step-inner">
+          <div class="setup-step-body">
+            <div class="setup-step-desc">${step.description}</div>
+            ${step.note ? `<div class="setup-step-note">💡 ${step.note}</div>` : ''}
+          </div>
+          <div class="step-images">${imagesHtml}</div>
+        </div>
       </div>
     </div>`;
 }
