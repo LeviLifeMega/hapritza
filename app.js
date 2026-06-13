@@ -78,7 +78,7 @@ function renderSidebar() {
     const lesson = state.lessons[i];
     const color = lesson ? (colorMap[lesson.color] || colorMap.purple) : colorMap.purple;
     const progress = getLessonProgress(i);
-    const label = i === 0 ? 'מפגש מקדים' : `שיעור ${i}${lesson && lesson.title ? ' - ' + lesson.title.slice(0,14) : ''}`;
+    const label = i === 0 ? 'מפגש מקדים' : `שיעור ${i}${lesson && lesson.title ? ' - ' + lesson.title : ''}`;
     html += `
       <div class="nav-item ${state.currentPage === `lesson_${i}` ? 'active' : ''}"
            onclick="navigateTo('lesson_${i}')"
