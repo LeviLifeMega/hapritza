@@ -84,7 +84,7 @@ function renderSidebar() {
            onclick="navigateTo('lesson_${i}')"
            id="nav-lesson-${i}">
         <span class="lesson-color-dot" style="background:${color}"></span>
-        <span>${label}</span>
+        <span class="nav-label">${label}</span>
         ${progress.total > 0 ? `<span class="progress-badge">${progress.done}/${progress.total}</span>` : ''}
       </div>`;
   }
